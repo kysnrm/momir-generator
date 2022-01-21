@@ -36,6 +36,9 @@
     {#each manaValues as manaValue}
       <button on:click={() => getCard(manaValue)}>{manaValue}</button>
     {/each}
+    {#if isError}
+      指定したマナ総量のクリーチャーが見つかりませんでした。
+    {/if}
   </div>
   {#if cards.length > 0 && !isError}
     <img
@@ -43,9 +46,9 @@
       alt={cards[cards.length - 1].name}
     />
   {/if}
-  {#if isError}
-    指定したマナ総量のクリーチャーが見つかりませんでした。
-  {/if}
+  {#each cards as card}
+    <img src={card.image_uris.small} alt={card.name} />
+  {/each}
 </main>
 
 <style>
