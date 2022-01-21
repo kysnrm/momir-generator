@@ -21,7 +21,7 @@
           return;
         }
         response.json().then((data) => {
-          cards = [...cards, data];
+          cards = [data, ...cards];
           isError = false;
         });
       })
@@ -41,10 +41,7 @@
     {/if}
   </div>
   {#if cards.length > 0 && !isError}
-    <img
-      src={cards[cards.length - 1].image_uris.normal}
-      alt={cards[cards.length - 1].name}
-    />
+    <img src={cards[0].image_uris.normal} alt={cards[0].name} />
   {/if}
   {#each cards as card}
     <img src={card.image_uris.small} alt={card.name} />
