@@ -8,25 +8,29 @@
     return minManaValue + i;
   });
 
+  let card;
   let cards = [];
   let isError: boolean = false;
 
   const getCard = async (manaValue: number) => {
+    if (card) cards = [card, ...cards];
     await fetch(
       `https://api.scryfall.com/cards/random?q=type%3Acreature+cmc%3D${manaValue}-border%3Asilver`
     )
       .then((response) => {
         if (!response.ok) {
           isError = true;
+          card = undefined;
           return;
         }
         response.json().then((data) => {
-          cards = [data, ...cards];
+          card = data;
           isError = false;
         });
       })
       .catch((error) => {
         isError = true;
+        card = undefined;
       });
   };
 </script>
@@ -40,8 +44,8 @@
       指定したマナ総量のクリーチャーが見つかりませんでした。
     {/if}
   </div>
-  {#if cards.length > 0 && !isError}
-    <img src={cards[0].image_uris.normal} alt={cards[0].name} />
+  {#if card && !isError}
+    <img src={card.image_uris.normal} alt={card.name} />
   {/if}
   {#each cards as card}
     <img src={card.image_uris.small} alt={card.name} />
