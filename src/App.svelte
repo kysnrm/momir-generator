@@ -9,15 +9,18 @@
   });
 
   let card;
+  let cards = [];
   let isError: boolean = false;
 
   const getCard = async (manaValue: number) => {
+    if (card) cards = [card, ...cards];
     await fetch(
       `https://api.scryfall.com/cards/random?q=type%3Acreature+cmc%3D${manaValue}-border%3Asilver`
     )
       .then((response) => {
         if (!response.ok) {
           isError = true;
+          card = undefined;
           return;
         }
         response.json().then((data) => {
@@ -27,6 +30,7 @@
       })
       .catch((error) => {
         isError = true;
+        card = undefined;
       });
   };
 </script>
@@ -36,13 +40,16 @@
     {#each manaValues as manaValue}
       <button on:click={() => getCard(manaValue)}>{manaValue}</button>
     {/each}
+    {#if isError}
+      指定したマナ総量のクリーチャーが見つかりませんでした。
+    {/if}
   </div>
   {#if card && !isError}
     <img src={card.image_uris.normal} alt={card.name} />
   {/if}
-  {#if isError}
-    指定したマナ総量のクリーチャーが見つかりませんでした。
-  {/if}
+  {#each cards as card}
+    <img src={card.image_uris.small} alt={card.name} />
+  {/each}
 </main>
 
 <style>
