@@ -35,22 +35,59 @@
   };
 </script>
 
-<main>
-  <div>
-    {#each manaValues as manaValue}
-      <button on:click={() => getCard(manaValue)}>{manaValue}</button>
-    {/each}
-    {#if isError}
-      指定したマナ総量のクリーチャーが見つかりませんでした。
-    {/if}
-  </div>
-  {#if card && !isError}
-    <img src={card.image} alt={card.name} />
-  {/if}
-  {#each cards as card}
-    <img src={card.image} alt={card.name} />
+<nav class="mana-value-buttons">
+  {#each manaValues as manaValue}
+    <button on:click={() => getCard(manaValue)}>{manaValue}</button>
   {/each}
+  {#if isError}
+    指定したマナ総量のクリーチャーが見つかりませんでした。
+  {/if}
+</nav>
+<main>
+  <section class="current-card">
+    {#if card && !isError}
+      <img src={card.image} alt={card.name} />
+    {/if}
+  </section>
+  <section class="history">
+    {#each cards as card}
+      <div class="history-card-wrapper">
+        <img class="history-card" src={card.image} alt={card.name} />
+      </div>
+    {/each}
+  </section>
 </main>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  .mana-value-buttons {
+    margin-bottom: 1.5rem;
+  }
+
+  main {
+    display: flex;
+  }
+
+  .current-card {
+    margin-right: 1.5rem;
+  }
+
+  .history {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin: -0.5rem -1rem -0.5rem -0.5rem;
+  }
+  .history-card-wrapper {
+    width: 33%;
+    padding: 0.5rem;
+  }
+  .history-card {
+    width: 100%;
+    vertical-align: top;
+  }
 </style>
