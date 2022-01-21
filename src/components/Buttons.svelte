@@ -3,6 +3,7 @@
   const dispatch = createEventDispatcher();
 
   const clickManaValue = (manaValue: number) => {
+    lastPressed = 0;
     dispatch("clickManaValue", manaValue);
   };
 
