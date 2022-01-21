@@ -15,17 +15,21 @@
     return minManaValue + i;
   });
 
+  let buttons: HTMLElement[] = [];
+
   const keyDown = (event: KeyboardEvent) => {
     if (!event.key.match(/[0-9]/)) return;
-    console.log(event.key);
+    buttons[event.key].focus();
   };
 </script>
 
 <svelte:window on:keydown={keyDown} />
 
-{#each manaValues as manaValue}
-  <button class="mana-value-button" on:click={() => clickManaValue(manaValue)}
-    >{manaValue}</button
+{#each manaValues as manaValue, index}
+  <button
+    class="mana-value-button"
+    on:click={() => clickManaValue(manaValue)}
+    bind:this={buttons[index]}>{manaValue}</button
   >
 {/each}
 
