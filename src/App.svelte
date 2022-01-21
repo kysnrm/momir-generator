@@ -8,7 +8,7 @@
     return minManaValue + i;
   });
 
-  let card;
+  let cards = [];
   let isError: boolean = false;
 
   const getCard = async (manaValue: number) => {
@@ -21,7 +21,7 @@
           return;
         }
         response.json().then((data) => {
-          card = data;
+          cards = [...cards, data];
           isError = false;
         });
       })
@@ -37,8 +37,11 @@
       <button on:click={() => getCard(manaValue)}>{manaValue}</button>
     {/each}
   </div>
-  {#if card && !isError}
-    <img src={card.image_uris.normal} alt={card.name} />
+  {#if cards.length > 0 && !isError}
+    <img
+      src={cards[cards.length - 1].image_uris.normal}
+      alt={cards[cards.length - 1].name}
+    />
   {/if}
   {#if isError}
     指定したマナ総量のクリーチャーが見つかりませんでした。
