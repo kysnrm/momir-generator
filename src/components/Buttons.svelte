@@ -17,12 +17,13 @@
 
   let buttons: HTMLElement[] = [];
   let lastPressed: number;
+  let focused: number;
 
   const keyDown = (event: KeyboardEvent) => {
     const key = event.key;
     if (!key.match(/[0-9]/)) return;
     const numericKey = Number(key);
-    if (lastPressed === 1 && numericKey <= 6) {
+    if (lastPressed === 1 && numericKey <= 6 && focused < 10) {
       const target = 10 + numericKey;
       buttons[target].focus();
       lastPressed = numericKey;
@@ -39,6 +40,7 @@
   <button
     class="mana-value-button"
     on:click={() => clickManaValue(manaValue)}
+    on:focus={() => (focused = index)}
     bind:this={buttons[index]}>{manaValue}</button
   >
 {/each}
