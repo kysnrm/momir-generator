@@ -63,8 +63,16 @@
     box-sizing: border-box;
   }
 
+  .mana-value-buttons {
+    margin-bottom: 1.5rem;
+  }
+
   main {
     display: flex;
+  }
+
+  .current-card {
+    margin-right: 1.5rem;
   }
 
   .history {
@@ -72,7 +80,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    margin: -0.5rem -1rem;
+    margin: -0.5rem -1rem -0.5rem -0.5rem;
   }
   .history-card-wrapper {
     width: 33%;
