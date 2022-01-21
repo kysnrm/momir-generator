@@ -51,10 +51,35 @@
   </section>
   <section class="history">
     {#each cards as card}
-      <img src={card.image} alt={card.name} />
+      <div class="history-card-wrapper">
+        <img class="history-card" src={card.image} alt={card.name} />
+      </div>
     {/each}
   </section>
 </main>
 
 <style>
+  * {
+    box-sizing: border-box;
+  }
+
+  main {
+    display: flex;
+  }
+
+  .history {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin: -0.5rem -1rem;
+  }
+  .history-card-wrapper {
+    width: 33%;
+    padding: 0.5rem;
+  }
+  .history-card {
+    width: 100%;
+    vertical-align: top;
+  }
 </style>
