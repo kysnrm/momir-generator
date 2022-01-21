@@ -35,21 +35,25 @@
   };
 </script>
 
-<main>
-  <div>
-    {#each manaValues as manaValue}
-      <button on:click={() => getCard(manaValue)}>{manaValue}</button>
-    {/each}
-    {#if isError}
-      指定したマナ総量のクリーチャーが見つかりませんでした。
-    {/if}
-  </div>
-  {#if card && !isError}
-    <img src={card.image} alt={card.name} />
-  {/if}
-  {#each cards as card}
-    <img src={card.image} alt={card.name} />
+<nav class="mana-value-buttons">
+  {#each manaValues as manaValue}
+    <button on:click={() => getCard(manaValue)}>{manaValue}</button>
   {/each}
+  {#if isError}
+    指定したマナ総量のクリーチャーが見つかりませんでした。
+  {/if}
+</nav>
+<main>
+  <section class="current-card">
+    {#if card && !isError}
+      <img src={card.image} alt={card.name} />
+    {/if}
+  </section>
+  <section class="history">
+    {#each cards as card}
+      <img src={card.image} alt={card.name} />
+    {/each}
+  </section>
 </main>
 
 <style>
