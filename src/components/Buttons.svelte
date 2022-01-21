@@ -14,7 +14,14 @@
   ).map((v, i) => {
     return minManaValue + i;
   });
+
+  const keyDown = (event: KeyboardEvent) => {
+    if (!event.key.match(/[0-9]/)) return;
+    console.log(event.key);
+  };
 </script>
+
+<svelte:window on:keydown={keyDown} />
 
 {#each manaValues as manaValue}
   <button class="mana-value-button" on:click={() => clickManaValue(manaValue)}
