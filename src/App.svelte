@@ -35,9 +35,11 @@
   };
 </script>
 
-<nav class="mana-value-buttons">
+<nav class="mana-value">
   {#each manaValues as manaValue}
-    <button on:click={() => getCard(manaValue)}>{manaValue}</button>
+    <button class="mana-value-button" on:click={() => getCard(manaValue)}
+      >{manaValue}</button
+    >
   {/each}
   {#if isError}
     指定したマナ総量のクリーチャーが見つかりませんでした。
@@ -63,8 +65,28 @@
     box-sizing: border-box;
   }
 
-  .mana-value-buttons {
+  .mana-value {
     margin-bottom: 1.5rem;
+  }
+
+  .mana-value-button {
+    width: 3rem;
+    height: 3rem;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 0.5rem;
+    background-color: transparent;
+    border: 1px solid #aaa;
+    cursor: pointer;
+    outline: none;
+    appearance: none;
+  }
+  .mana-value-button:hover,
+  .mana-value-button:focus {
+    background-color: #eee;
+  }
+  .mana-value-button + .mana-value-button {
+    margin-left: 0.5rem;
   }
 
   main {
