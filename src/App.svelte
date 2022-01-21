@@ -8,8 +8,8 @@
     return minManaValue + i;
   });
 
-  let card;
-  let cards = [];
+  let card: Card;
+  let cards: Card[] = [];
   let isError: boolean = false;
 
   const getCard = async (manaValue: number) => {
@@ -24,7 +24,7 @@
           return;
         }
         response.json().then((data) => {
-          card = data;
+          card = { image: data.image_uris.normal, name: data.name };
           isError = false;
         });
       })
@@ -45,10 +45,10 @@
     {/if}
   </div>
   {#if card && !isError}
-    <img src={card.image_uris.normal} alt={card.name} />
+    <img src={card.image} alt={card.name} />
   {/if}
   {#each cards as card}
-    <img src={card.image_uris.small} alt={card.name} />
+    <img src={card.image} alt={card.name} />
   {/each}
 </main>
 
