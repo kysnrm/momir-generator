@@ -85,6 +85,9 @@
   .mana-value-button:focus {
     background-color: #eee;
   }
+  .mana-value-button + .mana-value-button {
+    margin-left: 0.5rem;
+  }
 
   main {
     display: flex;
