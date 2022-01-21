@@ -16,10 +16,20 @@
   });
 
   let buttons: HTMLElement[] = [];
+  let lastPressed: number;
 
   const keyDown = (event: KeyboardEvent) => {
-    if (!event.key.match(/[0-9]/)) return;
-    buttons[event.key].focus();
+    const key = event.key;
+    if (!key.match(/[0-9]/)) return;
+    const numericKey = Number(key);
+    if (lastPressed === 1 && numericKey <= 6) {
+      const target = 10 + numericKey;
+      buttons[target].focus();
+      lastPressed = numericKey;
+      return;
+    }
+    lastPressed = numericKey;
+    buttons[numericKey].focus();
   };
 </script>
 
