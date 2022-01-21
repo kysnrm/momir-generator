@@ -1,65 +1,49 @@
 <script lang="ts">
-  import logo from './assets/svelte.png'
-  import Counter from './lib/Counter.svelte'
+  const maxManaValue = 16;
+  const minManaValue = 0;
+  const manaValues: number[] = Array.apply(
+    null,
+    new Array(maxManaValue + 1)
+  ).map((v, i) => {
+    return minManaValue + i;
+  });
+
+  let card;
+  let isError: boolean = false;
+
+  const getCard = async (manaValue: number) => {
+    await fetch(
+      `https://api.scryfall.com/cards/random?q=type%3Acreature+cmc%3D${manaValue}-border%3Asilver`
+    )
+      .then((response) => {
+        if (!response.ok) {
+          isError = true;
+          return;
+        }
+        response.json().then((data) => {
+          card = data;
+          isError = false;
+        });
+      })
+      .catch((error) => {
+        isError = true;
+      });
+  };
 </script>
 
 <main>
-  <img src={logo} alt="Svelte Logo" />
-  <h1>Hello Typescript!</h1>
-
-  <Counter />
-
-  <p>
-    Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte
-    apps.
-  </p>
-
-  <p>
-    Check out <a href="https://github.com/sveltejs/kit#readme">SvelteKit</a> for
-    the officially supported framework, also powered by Vite!
-  </p>
+  <div>
+    {#each manaValues as manaValue}
+      <button on:click={() => getCard(manaValue)}>{manaValue}</button>
+    {/each}
+  </div>
+  {#if card && !isError}
+    <img src={card.image_uris.normal} alt={card.name} />
+  {/if}
+  {#if isError}
+    指定したマナ総量のクリーチャーが見つかりませんでした。
+  {/if}
 </main>
 
 <style>
-  :root {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  }
-
-  main {
-    text-align: center;
-    padding: 1em;
-    margin: 0 auto;
-  }
-
-  img {
-    height: 16rem;
-    width: 16rem;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4rem;
-    font-weight: 100;
-    line-height: 1.1;
-    margin: 2rem auto;
-    max-width: 14rem;
-  }
-
-  p {
-    max-width: 14rem;
-    margin: 1rem auto;
-    line-height: 1.35;
-  }
-
-  @media (min-width: 480px) {
-    h1 {
-      max-width: none;
-    }
-
-    p {
-      max-width: none;
-    }
-  }
 </style>
