@@ -3,9 +3,11 @@
 
   let card: Card;
   let cards: Card[] = [];
+  let isLoading: boolean = true;
   let isError: boolean = false;
 
   const getCard = async (event: CustomEvent) => {
+    isLoading = true;
     if (card) cards = [card, ...cards];
     await fetch(
       `https://api.scryfall.com/cards/random?q=type%3Acreature+cmc%3D${event.detail}-border%3Asilver`
@@ -17,6 +19,7 @@
           return;
         }
         response.json().then((data) => {
+          isLoading = false;
           card = { image: data.image_uris.normal, name: data.name };
           isError = false;
         });
@@ -37,7 +40,7 @@
 <main>
   <section class="current-card">
     <div class="current-card-wrapper">
-      {#if card && !isError}
+      {#if card && !isLoading && !isError}
         <img src={card.image} alt={card.name} class="current-card-img" />
       {/if}
     </div>
