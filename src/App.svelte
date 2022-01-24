@@ -59,6 +59,10 @@
     box-sizing: border-box;
   }
 
+  img {
+    border-radius: 4.2% / 3%;
+  }
+
   .mana-value {
     margin-bottom: 1.5rem;
   }
@@ -76,9 +80,9 @@
   .current-card::before {
     content: "";
     display: block;
-    padding-top: 139%;
+    padding-top: 139.344262%;
     background-color: #aaa;
-    border-radius: 0.25rem;
+    border-radius: 4.2% / 3%;
   }
 
   .current-card-wrapper {
