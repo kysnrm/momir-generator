@@ -36,9 +36,11 @@
 </nav>
 <main>
   <section class="current-card">
-    {#if card && !isError}
-      <img src={card.image} alt={card.name} />
-    {/if}
+    <div class="current-card-wrapper">
+      {#if card && !isError}
+        <img src={card.image} alt={card.name} class="current-card-img" />
+      {/if}
+    </div>
   </section>
   <section class="history">
     {#each cards as card}
@@ -64,17 +66,36 @@
 
   .current-card {
     margin-right: 1.5rem;
+    position: relative;
+    width: 33.333333%;
+  }
+
+  .current-card::before {
+    content: "";
+    display: block;
+    padding-top: 139%;
+    background-color: #aaa;
+    border-radius: 0.25rem;
+  }
+
+  .current-card-wrapper {
+    position: absolute;
+    top: 0;
+  }
+
+  .current-card-img {
+    width: 100%;
   }
 
   .history {
-    flex-grow: 1;
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
-    margin: -0.5rem -1rem -0.5rem -0.5rem;
+    margin: -0.5rem;
+    width: 66.666666%;
   }
   .history-card-wrapper {
-    width: 33%;
+    width: 33.333333%;
     padding: 0.5rem;
   }
   .history-card {
